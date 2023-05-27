@@ -1,8 +1,8 @@
-//           >>>IMPLEMENTATION OF THE FORTH STACK<<<
+//          >>>KIForth - Forth interpreter with C<<<
 
 //                  CREATED BY AMIR KALAKI
 
-//                      26 / MAY / 2023
+//                      27 / MAY / 2023
 
 //        COPYRIGHT © 2023 AMIR KALAKI. ALL RIGHTS RESERVED.
 
@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SIZE 200
+#define SIZE 150                    //Size of stack in GForth is 150
 
 
 int top = -1 , STACK[SIZE];
