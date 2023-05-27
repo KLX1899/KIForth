@@ -1,7 +1,7 @@
 # KIForth
 This is my university project. creation a Forth interpreter by C.
 
-
+This project was described by @ahmad-siavashi and the reason for its name is: kalaKI + Forth = KIForth
 
 To do this project, I used gforth 0.7.3 compiler and I have tried to design the interpreter similar to gforth so that it is easier to work with it.
 
