@@ -16,11 +16,38 @@
 int top = -1 , STACK[SIZE];
 
 
-void push()
+void inputString()
 {
     char input[SIZE];                //Input string
     const char separator = ' ';      //Specify separator
     char *token;                     //The storage address that strtok() returns
+
+    gets(input);
+    token = strtok(input, &separator);
+
+    while( token != NULL )
+    {
+        if (isdigit(*token) > 0)
+        {
+            push(token);
+        }
+        else
+        {
+            tolower(*token);
+            if (strcmp(token , ".s") == 0)
+            {
+                printStack();
+            }    
+        }
+        
+        //Passing other tokens
+        token = strtok(NULL, &separator);
+    }
+}
+
+
+void push(char *token)
+{
     long int number;                 //The storage location of the number that atoi() returns
     
     //Oveflow checking
@@ -30,23 +57,9 @@ void push()
     }
     else
     {
-        gets(input);
-
-        //Input tokenizing by separator
-        token = strtok(input, &separator);
-
-        while( token != NULL )
-        {
-            number = atoi(token);
-            top = top + 1;
-            STACK[top] = (int) number;
-            // printf( " %s\n", token );
-    
-            //Passing other tokens
-            token = strtok(NULL, &separator);
-        }
-
-        
+        number = atoi(token);
+        top = top + 1;
+        STACK[top] = (int) number;
     }
 }
 
@@ -83,8 +96,6 @@ int main() {
         printf("-");
     }
     printf ("\n\n");
-    push();
-    printStack();
-    
+    inputString();    
     
 }
