@@ -2,7 +2,7 @@
 
 //                  CREATED BY AMIR KALAKI
 
-//                      27 / MAY / 2023
+//                      30 / MAY / 2023
 
 //        COPYRIGHT © 2023 AMIR KALAKI. ALL RIGHTS RESERVED.
 
@@ -14,6 +14,38 @@
 
 
 int top = -1 , STACK[SIZE];
+// It does not support spaces after :_ , ."_ , ... and upper or lower case and if a number is at the beginning of the expression
+char *keyWords[] = {".\"" , "(" , ")" , ":" , "." , ";" , "cr" , "dup" , "drop" , "swap" , "rot" , "+" , "-" , "*" , "/" , ">" , "<" , "=" , "and" , "or" , "xor" , "not" , "if" , "then" , "begin" , "until" , "do" , "loop" , ".s" , "/mod" , "mod" , "negate" , "nip" , "tuck" , "2swap" , "2dup" , "2over" , "2drop" , "s\""};
+char bye[] = "bye";
+
+void ok() 
+{
+    printf("ok\n");
+}
+
+
+void printStack() {
+
+    printf ("<%d>\t" , (top + 1));
+    if ((top + 1) > 9)
+    {
+        for (int i = (top - 8) ; i < (top + 1) ; i++)
+        {
+            printf ("%d    " , STACK[i]);
+        }
+        ok();
+    }
+    else
+    {
+        for (int i = 0 ; i < (top + 1) ; i++)
+        {
+            printf ("%d    " , STACK[i]);
+        }
+        ok();
+    }
+    
+
+}
 
 
 void inputString()
@@ -24,6 +56,7 @@ void inputString()
 
     gets(input);
     token = strtok(input, &separator);
+    ok();
 
     while( token != NULL )
     {
@@ -33,11 +66,29 @@ void inputString()
         }
         else
         {
-            tolower(*token);
+            for (int i = 0; i < sizeof(*token); i++)
+            {
+                tolower(*(token + i));
+            }
+            
+            /*tolower(*token);
             if (strcmp(token , ".s") == 0)
             {
                 printStack();
-            }    
+            }*/
+            if (strcmp(token , "bye") == 0)
+            {
+                printf("goodbye\n");
+                exit(0);
+            }
+            for (int i = 0; i < sizeof(keyWords); i++)
+            {
+               if (strcmp(token , *(keyWords + i)) == 0)
+               {
+                    printf("yeah!\n");
+                    break;
+               }
+            }
         }
         
         //Passing other tokens
@@ -64,30 +115,6 @@ void push(char *token)
 }
 
 
-void printStack() {
-
-    printf ("\n<%d>\t" , (top + 1));
-    if ((top + 1) > 10)
-    {
-        for (int i = (top - 9) ; i < (top + 1) ; i++)
-        {
-            printf ("%d    " , STACK[i]);
-        }
-        printf("\n\n");
-    }
-    else
-    {
-        for (int i = 0 ; i < (top + 1) ; i++)
-        {
-            printf ("%d    " , STACK[i]);
-        }
-        printf("\n\n");
-    }
-    
-
-}
-
-
 int main() {
 
     printf ("\n\n\t\t>>>FORTH SATCK DEMO<<<\n");
@@ -95,7 +122,10 @@ int main() {
     {
         printf("-");
     }
+    printf("\nKIForth version 1.0\nEnter the \"bye\" command to close the program.");
     printf ("\n\n");
-    inputString();    
+    input:
+        inputString();
+    goto input;
     
 }
