@@ -2,7 +2,7 @@
 
 //                  CREATED BY AMIR KALAKI
 
-//                      25 / JUNE / 2023
+//                      26 / JUNE / 2023
 
 //        COPYRIGHT © 2023 AMIR KALAKI. ALL RIGHTS RESERVED.
 
@@ -12,6 +12,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
+#include <curses.h>
+
 
 #define SIZE 150                    //Size of stack in GForth is 150
 #define NULL ((void *)0)
@@ -24,12 +27,15 @@ char *keyWords[] = {".\"" , "(" , ")" , ":" , "." , ";" , "cr" , "dup" , "drop" 
 "swap" , "rot" , "+" , "-" , "*" , "/" , ">" , "<" , "=" , "and" , "or" , "xor"     ,
 "not" , "if" , "then" , "begin" , "until" , "do" , "loop" , ".s" , "/mod" , "mod"   ,
 "negate" , "nip" , "tuck" , "t_swap" , "t_dup" , "t_over" , "t_drop" , "s\""       };
+// include fileName.fs
+// clear , reset , restart      : clear desktop
+//
 
 
 
 
-//ok():Printing it shows that the command is done
 
+//ok()          :   Printing it shows that the command is done
 void ok() 
 {
     printf("> ok\n");
@@ -37,9 +43,8 @@ void ok()
 
 
 
-//printStack():Prints the number of elements in the stack and their values
-
-void printStack()
+//printStack()  :   Prints the number of elements in the stack and their values
+void printStack() //printStack():Prints the number of elements in the stack and their values
 {
     printf ("<%d>\t" , (top + 1));
     if ((top + 1) > 9)
@@ -48,6 +53,7 @@ void printStack()
         {
             printf ("%d    " , STACK[i]);
         }
+        printf("\n");
         ok();
     }
     else
@@ -56,17 +62,17 @@ void printStack()
         {
             printf ("%d    " , STACK[i]);
         }
+        printf("\n");
         ok();
     }
 }
 
 
 
-//push():Adds entered numbers to top of the stack
-
+//push()        :   Adds entered numbers to top of the stack
 void push(char *token)
 {
-    long int number;                 //The storage location of the number that atoi() returns
+    int number;                 //The storage location of the number that atoi() returns
     
     //Oveflow checking
     if (top == SIZE - 1)
@@ -83,11 +89,10 @@ void push(char *token)
 
 
 
-//inputString():Takes the input string and checks it and refers to the corresponding function
-
+//inputString() :   Takes the input string and checks it and refers to the corresponding function
 void inputString()
 {
-    char input[SIZE];                //Input string
+    char input[1000];                //Input string
     const char separator = ' ';      //Specify separator
     char *token;                     //The storage address that strtok() returns
 
@@ -114,6 +119,33 @@ void inputString()
                if (strcasecmp(token , *(keyWords + i)) == 0)
                {
                     printf("yeah!\n");
+                    
+                    switch (i)
+                    {
+                    case 6:                         //cr
+                        printf("\n");
+                        break;
+
+                    case 7:                         //dup
+                        printf("dup ");
+                        break;
+
+                    case 8:                         //drop
+                        printf("drop ");
+                        break;
+
+                    case 9:                         //swap
+                        printf("swap ");
+                        break;
+                    
+                    case 28:                         //.s
+                        printStack();
+                        break;
+                    
+                    default:
+                        printf("sag ");
+                        break;
+                    }
                     break;
                }
             }
@@ -123,3 +155,4 @@ void inputString()
         token = strtok(NULL, &separator);
     }
 }
+
