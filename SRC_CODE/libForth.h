@@ -70,10 +70,7 @@ void printStack() //printStack():Prints the number of elements in the stack and 
 //push()        :   Adds entered numbers to top of the stack
 void push(int number)
 {
-    //int number;                 //The storage location of the number that atoi() returns
-    
-    //Oveflow checking
-    if (top == SIZE - 1)
+    if (top == SIZE - 1)    //Oveflow checking
     {
         printf("\n\n\t\t[-] STACK OVERFLOW!\n\n");
     }
@@ -83,6 +80,23 @@ void push(int number)
         top = top + 1;
         STACK[top] = (int) number;
     }
+}
+
+
+
+//pop()        :   Adds entered numbers to top of the stack
+void pop()
+{
+    if (top == -1)    //Underflow checking
+    {
+        printf("\n\n\t\t[-] STACK UNDERFLOW!\n\n");
+    }
+    else
+    {
+        STACK[top] = '\0';
+        top = top - 1;
+    }
+
 }
 
 
@@ -129,7 +143,7 @@ void inputString()
                         break;
 
                     case 8:                         //drop
-                        printf("drop ");
+                        pop();
                         break;
 
                     case 9:                         //swap
