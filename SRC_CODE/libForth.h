@@ -54,7 +54,6 @@ void printStack() //printStack():Prints the number of elements in the stack and 
             printf ("%d    " , STACK[i]);
         }
         printf("\n");
-        ok();
     }
     else
     {
@@ -63,16 +62,15 @@ void printStack() //printStack():Prints the number of elements in the stack and 
             printf ("%d    " , STACK[i]);
         }
         printf("\n");
-        ok();
     }
 }
 
 
 
 //push()        :   Adds entered numbers to top of the stack
-void push(char *token)
+void push(int number)
 {
-    int number;                 //The storage location of the number that atoi() returns
+    //int number;                 //The storage location of the number that atoi() returns
     
     //Oveflow checking
     if (top == SIZE - 1)
@@ -81,7 +79,7 @@ void push(char *token)
     }
     else
     {
-        number = atoi(token);        //Adding numbers to the stack
+    //    number = atoi(token);        //Adding numbers to the stack
         top = top + 1;
         STACK[top] = (int) number;
     }
@@ -105,7 +103,7 @@ void inputString()
     {
         if (isdigit(*token) > 0)     //Checks if this token is number or text
         {
-            push(token);
+            push(atoi(token));
         }
         else
         {
@@ -127,7 +125,7 @@ void inputString()
                         break;
 
                     case 7:                         //dup
-                        printf("dup ");
+                        push(STACK[top]);
                         break;
 
                     case 8:                         //drop
