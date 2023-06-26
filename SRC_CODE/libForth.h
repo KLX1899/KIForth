@@ -84,7 +84,7 @@ void push(int number)
 
 
 
-//pop()        :   Adds entered numbers to top of the stack
+//pop()        :   Removes top of the stack
 void pop()
 {
     if (top == -1)    //Underflow checking
@@ -97,6 +97,17 @@ void pop()
         top = top - 1;
     }
 
+}
+
+
+
+void swap()
+{
+    int temp;
+
+    temp = STACK[top];
+    STACK[top] = STACK[top - 1];
+    STACK[top - 1] = temp;
 }
 
 
@@ -147,7 +158,7 @@ void inputString()
                         break;
 
                     case 9:                         //swap
-                        printf("swap ");
+                        swap();
                         break;
                     
                     case 28:                         //.s
