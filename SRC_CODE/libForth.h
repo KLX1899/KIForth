@@ -160,6 +160,30 @@ void divi()
 
 
 
+//mod() :    10 3 mod --> 2
+void mod()
+{
+    STACK[top - 1] = STACK[top - 1] % STACK[top];
+    pop();
+}
+
+
+
+
+// /mod() :   10 3 /mod -->  1 3
+void mod_quotient()
+{
+    int a , b;
+
+    a = STACK[top - 1];
+    b = STACK[top];
+    STACK[top - 1] = a % b;
+    STACK[top] = a / b;
+}
+
+
+
+
 //inputString() :   Takes the input string and checks it and refers to the corresponding function
 void inputString()
 {
@@ -209,29 +233,37 @@ void inputString()
                         swap(top , (top - 1) );
                         break;
                     
-                    case 10:                                //rot       1 2 3 --> 2 3 1
+                    case 10:                                //rot       1 2 3 --> 2 3 1         (rotate)
                         swap( (top - 1) , (top - 2) );
                         swap(top , (top - 1) );                        
                         break;
                     
-                    case 11:                                //add       1 2 + -->     3
+                    case 11:                                //add       1 2 + -->     3         (addition)
                         add();
                         break;
                     
-                    case 12:                                //minus     2 1 - -->     1
+                    case 12:                                //sub       2 1 - -->     1         (subtraction)
                         sub();
                         break;
                     
-                    case 13:                                //mltp      2 3 * -->     6
+                    case 13:                                //mltp      2 3 * -->     6         (multiplication)
                         mltp();
                         break;
                     
-                    case 14:                                //divi      9 3 / -->     3
+                    case 14:                                //divi      9 3 / -->     3         (division)
                         divi();
                         break;
                     
-                    case 28:                                //.s        Print stack
+                    case 28:                                //.s        Prints the stack
                         printStack();
+                        break;
+                    
+                    case 29:                                // /mod     Shows remainder and quotient
+                        mod_quotient();
+                        break;
+                    
+                    case 30:                                //mod       Shows remainder
+                        mod();
                         break;
                     
                     default:
