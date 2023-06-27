@@ -116,9 +116,47 @@ void swap(int number1 , int number2)
 //add() :   1 2 + -->     3
 void add()
 {
-    STACK[top - 1] = STACK[top] + STACK[top - 1];
+    STACK[top - 1] = STACK[top - 1] + STACK[top];
     pop();
 }
+
+
+
+//sub() :   2 1 - -->     1
+void sub()
+{
+    STACK[top - 1] = STACK[top - 1] - STACK[top];
+    pop();
+}
+
+
+
+
+//mltp() :   2 3 * -->    6
+void mltp()
+{
+    STACK[top - 1] = STACK[top - 1] * STACK[top];
+    pop();
+}
+
+
+
+
+//divi() :   9 3 / -->    3
+void divi()
+{
+    if (STACK[top] != 0)
+    {
+        STACK[top - 1] = STACK[top - 1] / STACK[top];
+        pop();
+    }
+    else
+    {
+        printf("\n\n\t\t[-] DIVISION BY 0!\n\n");
+    }
+    
+}
+
 
 
 
@@ -181,7 +219,15 @@ void inputString()
                         break;
                     
                     case 12:                                //minus     2 1 - -->     1
-                        
+                        sub();
+                        break;
+                    
+                    case 13:                                //mltp      2 3 * -->     6
+                        mltp();
+                        break;
+                    
+                    case 14:                                //divi      9 3 / -->     3
+                        divi();
                         break;
                     
                     case 28:                                //.s        Print stack
