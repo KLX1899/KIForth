@@ -203,6 +203,15 @@ void nip()
 
 
 
+//tuck() :   3 7 tuck  --> 3 7 3
+void tuck()
+{
+    push(STACK[top - 1]);
+}
+
+
+
+
 //inputString() :   Takes the input string and checks it and refers to the corresponding function
 void inputString()
 {
@@ -291,6 +300,10 @@ void inputString()
                     
                     case 32:                                //nip       3 7 nip  -->  7
                         nip();
+                        break;
+                    
+                    case 33:                                //tuck      3 7 tuck --> 3 7 3
+                        tuck();
                         break;
                     
                     default:
