@@ -352,6 +352,18 @@ void inputString()
                         }
                         break;
                     
+                    case 37:                                //tdrop      1 2 tdrop --> 
+                        if (top >= 1)
+                        {
+                            pop();
+                            pop();
+                        }
+                        else
+                        {
+                            printf("\n\n\t\t[-] Stack has less than two elements!\n\n");
+                        }
+                        break;
+                    
                     default:
                         printf("sag ");
                         break;
