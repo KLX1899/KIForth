@@ -328,6 +328,18 @@ void inputString()
                         tswap(top , (top - 1) , (top - 2) , (top - 3) );
                         break;
                     
+                    case 35:                                //tdup      1 2 tdup --> 1 2 1 2
+                        if (top >= 1)
+                        {
+                            push(STACK[top - 1]);
+                            push(STACK[top - 1]);
+                        }
+                        else
+                        {
+                            printf("\n\n\t\t[-] Stack has less than two elements!\n\n");
+                        }
+                        break;
+                    
                     default:
                         printf("sag ");
                         break;
