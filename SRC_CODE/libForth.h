@@ -26,7 +26,8 @@ int top = -1 , STACK[SIZE];
 char *keyWords[] = {".\"" , "(" , ")" , ":" , "." , ";" , "cr" , "dup" , "drop"     ,
 "swap" , "rot" , "+" , "-" , "*" , "/" , ">" , "<" , "=" , "and" , "or" , "xor"     ,
 "not" , "if" , "then" , "begin" , "until" , "do" , "loop" , ".s" , "/mod" , "mod"   ,
-"negate" , "nip" , "tuck" , "tswap" , "tdup" , "tover" , "tdrop" , "s\"" , "min"};
+"negate" , "nip" , "tuck" , "tswap" , "tdup" , "tover" , "tdrop" , "s\"" , "min"    ,   
+"max"};
 // include fileName.fs
 // clear , reset , restart      : clear desktop
 //
@@ -230,7 +231,7 @@ void tuck()
 
 
 
-//min() :   3 7 min  --> 3                      PROBLEM
+//min() :   3 7 min  --> 3
 void min()
 {
     if (STACK[top] < STACK[top- 1])
@@ -241,7 +242,22 @@ void min()
     {
         pop();
     }
-    
+}
+
+
+
+
+//max() :   3 7 max  --> 7
+void max()
+{
+    if (STACK[top] < STACK[top- 1])
+    {
+        pop();
+    }
+    else
+    {
+        nip();
+    }
 }
 
 
@@ -385,6 +401,17 @@ void inputString()
                         if (top >= 1)
                         {
                             min();
+                        }
+                        else
+                        {
+                            printf("\n\n\t\t[-] Stack has less than two elements!\n\n");
+                        }
+                        break;
+                    
+                    case 40:                                //max      4 2 max --> 4
+                        if (top >= 1)
+                        {
+                            max();
                         }
                         else
                         {
