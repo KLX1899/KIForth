@@ -26,7 +26,7 @@ int top = -1 , STACK[SIZE];
 char *keyWords[] = {".\"" , "(" , ")" , ":" , "." , ";" , "cr" , "dup" , "drop"     ,
 "swap" , "rot" , "+" , "-" , "*" , "/" , ">" , "<" , "=" , "and" , "or" , "xor"     ,
 "not" , "if" , "then" , "begin" , "until" , "do" , "loop" , ".s" , "/mod" , "mod"   ,
-"negate" , "nip" , "tuck" , "t_swap" , "t_dup" , "t_over" , "t_drop" , "s\""       };
+"negate" , "nip" , "tuck" , "tswap" , "tdup" , "tover" , "tdrop" , "s\""       };
 // include fileName.fs
 // clear , reset , restart      : clear desktop
 //
@@ -109,6 +109,24 @@ void swap(int number1 , int number2)
     temp = STACK[number1];
     STACK[number1] = STACK[number2];
     STACK[number2] = temp;
+}
+
+
+
+//tswap()       :   Replaces first two numbers and the second two numbers
+void tswap(int number1 , int number2 , int number3 , int number4)
+{
+    if (top >= 3)
+    {
+        swap(number1 , number3);
+        swap(number2 , number4);
+    }
+    else
+    {
+        printf("\n\n\t\t[-] Stack has less than four elements!\n\n");
+    }
+    
+    
 }
 
 
@@ -304,6 +322,10 @@ void inputString()
                     
                     case 33:                                //tuck      3 7 tuck --> 3 7 3
                         tuck();
+                        break;
+                    
+                    case 34:                                //tswap      1 2 3 4 tswap --> 3 4 1 2
+                        tswap(top , (top - 1) , (top - 2) , (top - 3) );
                         break;
                     
                     default:
