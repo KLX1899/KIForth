@@ -13,6 +13,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <stdbool.h>
+#include <math.h>
 #include <curses.h>
 
 
@@ -27,7 +29,7 @@ char *keyWords[] = {".\"" , "(" , ")" , ":" , "." , ";" , "cr" , "dup" , "drop" 
 "swap" , "rot" , "+" , "-" , "*" , "/" , ">" , "<" , "=" , "and" , "or" , "xor"     ,
 "not" , "if" , "then" , "begin" , "until" , "do" , "loop" , ".s" , "/mod" , "mod"   ,
 "negate" , "nip" , "tuck" , "tswap" , "tdup" , "tover" , "tdrop" , "s\"" , "min"    ,   
-"max"};
+"max" , "log"};
 // include fileName.fs
 // clear , reset , restart      : clear desktop
 //
@@ -40,6 +42,22 @@ char *keyWords[] = {".\"" , "(" , ")" , ":" , "." , ";" , "cr" , "dup" , "drop" 
 void ok() 
 {
     printf("> ok\n");
+}
+
+
+
+//precondition()      :   Checks Preconditions for manipulating the stack
+bool precondition(int atLeast) 
+{
+    if (top < atLeast)
+    {
+        printf("\n\n\t\t[-] STACK UNDERFLOW!\n\n");
+        return false;
+    }
+    else
+    {
+        return true;
+    }
 }
 
 
@@ -77,7 +95,6 @@ void push(int number)
     }
     else
     {
-    //    number = atoi(token);        //Adding numbers to the stack
         top = top + 1;
         STACK[top] = (int) number;
     }
@@ -88,11 +105,7 @@ void push(int number)
 //pop()        :   Removes top of the stack
 void pop()
 {
-    if (top == -1)    //Underflow checking
-    {
-        printf("\n\n\t\t[-] STACK UNDERFLOW!\n\n");
-    }
-    else
+    if (precondition(-1))    //Underflow checking
     {
         STACK[top] = '\0';
         top = top - 1;
@@ -107,9 +120,13 @@ void swap(int number1 , int number2)
 {
     int temp;
 
-    temp = STACK[number1];
-    STACK[number1] = STACK[number2];
-    STACK[number2] = temp;
+    if (precondition(1))
+    {
+        temp = STACK[number1];
+        STACK[number1] = STACK[number2];
+        STACK[number2] = temp;
+
+    }
 }
 
 
@@ -135,8 +152,12 @@ void tswap(int number1 , int number2 , int number3 , int number4)
 //add() :   1 2 + -->     3
 void add()
 {
-    STACK[top - 1] = STACK[top - 1] + STACK[top];
-    pop();
+    if (precondition(1))
+    {
+        STACK[top - 1] = STACK[top - 1] + STACK[top];
+        pop();
+    }
+    
 }
 
 
@@ -144,8 +165,11 @@ void add()
 //sub() :   2 1 - -->     1
 void sub()
 {
-    STACK[top - 1] = STACK[top - 1] - STACK[top];
-    pop();
+    if (precondition(1))
+    {
+        STACK[top - 1] = STACK[top - 1] - STACK[top];
+        pop();
+    }
 }
 
 
@@ -154,8 +178,11 @@ void sub()
 //mltp() :   2 3 * -->    6
 void mltp()
 {
-    STACK[top - 1] = STACK[top - 1] * STACK[top];
-    pop();
+    if (precondition(1))
+    {
+        STACK[top - 1] = STACK[top - 1] * STACK[top];
+        pop();
+    }
 }
 
 
@@ -166,8 +193,11 @@ void divi()
 {
     if (STACK[top] != 0)
     {
-        STACK[top - 1] = STACK[top - 1] / STACK[top];
-        pop();
+        if (precondition(1))
+        {
+            STACK[top - 1] = STACK[top - 1] / STACK[top];
+            pop();
+        }
     }
     else
     {
@@ -182,8 +212,11 @@ void divi()
 //mod() :    10 3 mod --> 2
 void mod()
 {
-    STACK[top - 1] = STACK[top - 1] % STACK[top];
-    pop();
+    if (precondition(1))
+    {
+        STACK[top - 1] = STACK[top - 1] % STACK[top];
+        pop();
+    }
 }
 
 
@@ -194,10 +227,13 @@ void mod_quotient()
 {
     int a , b;
 
-    a = STACK[top - 1];
-    b = STACK[top];
-    STACK[top - 1] = a % b;
-    STACK[top] = a / b;
+    if (precondition(1))
+    {
+        a = STACK[top - 1];
+        b = STACK[top];
+        STACK[top - 1] = a % b;
+        STACK[top] = a / b;
+    }
 }
 
 
@@ -206,7 +242,10 @@ void mod_quotient()
 //negate() :   3 -->  -3
 void negate()
 {
-    STACK[top] = -STACK[top];
+    if (precondition(0))
+    {
+        STACK[top] = -STACK[top];
+    }
 }
 
 
@@ -215,8 +254,11 @@ void negate()
 //nip() :   3 7 nip  -->  7
 void nip()
 {
-    swap((top - 1) , top);
-    pop();
+    if (precondition(1))
+    {
+        swap((top - 1) , top);
+        pop();
+    }
 }
 
 
@@ -225,7 +267,10 @@ void nip()
 //tuck() :   3 7 tuck  --> 3 7 3
 void tuck()
 {
-    push(STACK[top - 1]);
+    if (precondition(1))
+    {
+        push(STACK[top - 1]);
+    }
 }
 
 
@@ -234,13 +279,16 @@ void tuck()
 //min() :   3 7 min  --> 3
 void min()
 {
-    if (STACK[top] < STACK[top- 1])
+    if (precondition(1))
     {
-        nip();
-    }
-    else
-    {
-        pop();
+        if (STACK[top] < STACK[top - 1])
+        {
+            nip();
+        }
+        else
+        {
+            pop();
+        }
     }
 }
 
@@ -250,13 +298,16 @@ void min()
 //max() :   3 7 max  --> 7
 void max()
 {
-    if (STACK[top] < STACK[top- 1])
+    if (precondition(1))
     {
-        pop();
-    }
-    else
-    {
-        nip();
+        if (STACK[top] < STACK[top - 1])
+        {
+            pop();
+        }
+        else
+        {
+            nip();
+        }
     }
 }
 
@@ -305,16 +356,26 @@ void inputString()
                         break;
 
                     case 8:                                 //drop      1 2 3 -->   1 2
-                        pop();
+                        if (precondition(0))
+                        {
+                            pop();
+                        }
                         break;
-
+                    
                     case 9:                                 //swap      1 2   -->   2 1
                         swap(top , (top - 1) );
                         break;
                     
                     case 10:                                //rot       1 2 3 --> 2 3 1         (rotate)
-                        swap( (top - 1) , (top - 2) );
-                        swap(top , (top - 1) );                        
+                        if (top >= 2)
+                        {
+                            swap( (top - 1) , (top - 2) );
+                            swap(top , (top - 1) );                        
+                        }
+                        else
+                        {
+                            printf("\n\n\t\t[-] STACK UNDERFLOW!\n\n");
+                        }
                         break;
                     
                     case 11:                                //add       1 2 + -->     3         (addition)
@@ -344,7 +405,7 @@ void inputString()
                     case 30:                                //mod       Shows remainder
                         mod();
                         break;
-                    
+                                        
                     case 31:                                //negate    3 negate --> -3
                         negate();
                         break;
@@ -358,7 +419,14 @@ void inputString()
                         break;
                     
                     case 34:                                //tswap      1 2 3 4 tswap --> 3 4 1 2
-                        tswap(top , (top - 1) , (top - 2) , (top - 3) );
+                        if (top >= 3)
+                        {
+                            tswap(top , (top - 1) , (top - 2) , (top - 3) );
+                        }
+                        else
+                        {
+                            printf("\n\n\t\t[-] STACK UNDERFLOW!\n\n");
+                        }
                         break;
                     
                     case 35:                                //tdup      1 2 tdup --> 1 2 1 2
@@ -398,25 +466,11 @@ void inputString()
                         break;
                     
                     case 39:                                //min      4 2 min --> 2
-                        if (top >= 1)
-                        {
-                            min();
-                        }
-                        else
-                        {
-                            printf("\n\n\t\t[-] Stack has less than two elements!\n\n");
-                        }
+                        min();
                         break;
                     
                     case 40:                                //max      4 2 max --> 4
-                        if (top >= 1)
-                        {
-                            max();
-                        }
-                        else
-                        {
-                            printf("\n\n\t\t[-] Stack has less than two elements!\n\n");
-                        }
+                        max();
                         break;
                     
                     default:
