@@ -340,6 +340,18 @@ void inputString()
                         }
                         break;
                     
+                    case 36:                                //tover      1 2 3 4 tover --> 1 2 3 4 1 2
+                        if (top >= 3)
+                        {
+                            push(STACK[top - 3]);
+                            push(STACK[top - 3]);
+                        }
+                        else
+                        {
+                            printf("\n\n\t\t[-] Stack has less than four elements!\n\n");
+                        }
+                        break;
+                    
                     default:
                         printf("sag ");
                         break;
