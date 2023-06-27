@@ -184,6 +184,25 @@ void mod_quotient()
 
 
 
+//negate() :   3 -->  -3
+void negate()
+{
+    STACK[top] = -STACK[top];
+}
+
+
+
+
+//nip() :   3 7 nip  -->  7
+void nip()
+{
+    STACK[top] = STACK[top - 1];
+    pop();
+}
+
+
+
+
 //inputString() :   Takes the input string and checks it and refers to the corresponding function
 void inputString()
 {
@@ -264,6 +283,14 @@ void inputString()
                     
                     case 30:                                //mod       Shows remainder
                         mod();
+                        break;
+                    
+                    case 31:                                //negate    3 negate --> -3
+                        negate();
+                        break;
+                    
+                    case 32:                                //nip       3 7 nip  -->  7
+                        nip();
                         break;
                     
                     default:
