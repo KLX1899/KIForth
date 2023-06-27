@@ -2,7 +2,7 @@
 
 //                  CREATED BY AMIR KALAKI
 
-//                      26 / JUNE / 2023
+//                      27 / JUNE / 2023
 
 //        COPYRIGHT © 2023 AMIR KALAKI. ALL RIGHTS RESERVED.
 
@@ -101,13 +101,23 @@ void pop()
 
 
 
-void swap()
+//swap()       :   Replaces number1 and number2
+void swap(int number1 , int number2)
 {
     int temp;
 
-    temp = STACK[top];
-    STACK[top] = STACK[top - 1];
-    STACK[top - 1] = temp;
+    temp = STACK[number1];
+    STACK[number1] = STACK[number2];
+    STACK[number2] = temp;
+}
+
+
+
+//add() :   1 2 + -->     3
+void add()
+{
+    STACK[top - 1] = STACK[top] + STACK[top - 1];
+    pop();
 }
 
 
@@ -145,23 +155,36 @@ void inputString()
                     
                     switch (i)
                     {
-                    case 6:                         //cr
+                    case 6:                                 //cr        New line
                         printf("\n");
                         break;
 
-                    case 7:                         //dup
+                    case 7:                                 //dup       1 2   --> 1 2 2
                         push(STACK[top]);
                         break;
 
-                    case 8:                         //drop
+                    case 8:                                 //drop      1 2 3 -->   1 2
                         pop();
                         break;
 
-                    case 9:                         //swap
-                        swap();
+                    case 9:                                 //swap      1 2   -->   2 1
+                        swap(top , (top - 1) );
                         break;
                     
-                    case 28:                         //.s
+                    case 10:                                //rot       1 2 3 --> 2 3 1
+                        swap( (top - 1) , (top - 2) );
+                        swap(top , (top - 1) );                        
+                        break;
+                    
+                    case 11:                                //add       1 2 + -->     3
+                        add();
+                        break;
+                    
+                    case 12:                                //minus     2 1 - -->     1
+                        
+                        break;
+                    
+                    case 28:                                //.s        Print stack
                         printStack();
                         break;
                     
