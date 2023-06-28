@@ -29,7 +29,7 @@ char *keyWords[] = {".\"" , "(" , ")" , ":" , "." , ";" , "cr" , "dup" , "drop" 
 "swap" , "rot" , "+" , "-" , "*" , "/" , ">" , "<" , "=" , "and" , "or" , "xor"     ,
 "not" , "if" , "then" , "begin" , "until" , "do" , "loop" , ".s" , "/mod" , "mod"   ,
 "negate" , "nip" , "tuck" , "tswap" , "tdup" , "tover" , "tdrop" , "s\"" , "min"    ,   
-"max" , "^"};
+"max" , "^" , "true" , "false" , "emit"};
 // include fileName.fs
 // clear , reset , restart      : clear desktop
 //
@@ -65,7 +65,7 @@ bool precondition(int atLeast)
 //printStack()  :   Prints the number of elements in the stack and their values
 void printStack() //printStack():Prints the number of elements in the stack and their values
 {
-    printf ("<%d>\t" , (top + 1));
+    printf ("> <%d>\t" , (top + 1));
     if ((top + 1) > 9)
     {
         for (int i = (top - 8) ; i < (top + 1) ; i++)
@@ -327,6 +327,21 @@ void max()
 
 
 
+//emit() :   Print char of ascii code
+void emit()
+{
+    if (precondition(0))
+    {
+        char asciiChar = (char) STACK[top];
+
+        printf("> %c\n", asciiChar);
+        pop();
+    }
+}
+
+
+
+
 //inputString() :   Takes the input string and checks it and refers to the corresponding function
 void inputString()
 {
@@ -493,6 +508,10 @@ void inputString()
                     
                     case 41:                                //power    3 2 ^ --> 9
                         power();
+                        break;
+                    
+                    case 44:                                //emit     Print char of its ascii code
+                        emit();
                         break;
                     
                     default:
