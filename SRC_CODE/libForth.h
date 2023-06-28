@@ -29,7 +29,7 @@ char *keyWords[] = {".\"" , "(" , ")" , ":" , "." , ";" , "cr" , "dup" , "drop" 
 "swap" , "rot" , "+" , "-" , "*" , "/" , ">" , "<" , "=" , "and" , "or" , "xor"     ,
 "not" , "if" , "then" , "begin" , "until" , "do" , "loop" , ".s" , "/mod" , "mod"   ,
 "negate" , "nip" , "tuck" , "tswap" , "tdup" , "tover" , "tdrop" , "s\"" , "min"    ,   
-"max" , "log"};
+"max" , "^"};
 // include fileName.fs
 // clear , reset , restart      : clear desktop
 //
@@ -209,6 +209,19 @@ void divi()
 
 
 
+//power() :   3 2 ^ -->     9
+void power()
+{
+    if (precondition(1))
+    {
+        STACK[top - 1] = pow(STACK[top - 1] , STACK[top]);
+        pop();
+    }
+    
+}
+
+
+
 //mod() :    10 3 mod --> 2
 void mod()
 {
@@ -343,10 +356,15 @@ void inputString()
             {
                if (strcasecmp(token , *(keyWords + i)) == 0)
                {
-                    printf("yeah!\n");
-                    
                     switch (i)
                     {
+                    case 1:                                 // (        
+                        printf("\n");
+                        break;
+
+                    case 2:                                 // )        
+                        break;
+
                     case 6:                                 //cr        New line
                         printf("\n");
                         break;
@@ -471,6 +489,10 @@ void inputString()
                     
                     case 40:                                //max      4 2 max --> 4
                         max();
+                        break;
+                    
+                    case 41:                                //power    3 2 ^ --> 9
+                        power();
                         break;
                     
                     default:
