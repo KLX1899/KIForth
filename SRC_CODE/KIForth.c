@@ -2,7 +2,7 @@
 
 //                  CREATED BY AMIR KALAKI
 
-//                      25 / JUNE / 2023
+//                      29 / JUNE / 2023
 
 //        COPYRIGHT © 2023 AMIR KALAKI. ALL RIGHTS RESERVED.
 
@@ -18,6 +18,7 @@
 
 int main() {
 
+    //system("gnome-terminal -x sh -c './KIForth.c; exec bash'");
     printf ("\n\n\t\t>>>FORTH SATCK DEMO<<<\n");
     for (int i = 0; i < 60; i++)
     {
@@ -26,7 +27,7 @@ int main() {
     printf("\nKIForth version 1.0\nEnter the \"bye\" command to close the program.");
     printf ("\n\n");
     input:
-        inputString();
+        command();
     goto input;
     
 }
