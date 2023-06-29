@@ -18,8 +18,7 @@
 
 int main() {
 
-    //system("gnome-terminal -x sh -c './KIForth.c; exec bash'");
-    printf ("\n\n\t\t>>>FORTH SATCK DEMO<<<\n");
+    printf ("\n\n\t\t>>>FORTH INTERPRETER<<<\n");
     for (int i = 0; i < 60; i++)
     {
         printf("-");
