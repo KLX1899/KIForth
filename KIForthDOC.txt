@@ -1,0 +1,271 @@
+//          	  >>>KIForth Documentation<<<
+
+//                  CREATED BY AMIR KALAKI
+
+//                      29 / JUNE / 2023
+
+//        COPYRIGHT © 2023 AMIR KALAKI. ALL RIGHTS RESERVED.
+
+
+
+
+
+
+
+
+NOTE1) To run this program with Linux(uBUNTU), type the following command in the terminal:
+       $ cd "PATH" && gcc KIForth.c -o KIForth -lm && "PATH"KIForth
+       
+NOTE2) Don't forget that Forth is a stack-based language and follows postfix calculations!
+
+
+
+
+
+
+
+
+
+- PRINT STACK:
+
+	Type "prs" and press enter.
+
+	> prs(ENTER)
+	> <The number of elements in the stack>	element1   element2   ...
+	  
+	EX) <5>		1   2   3   4   5
+
+
+
+
+- PUSH STACK:
+
+	Just type your numbers and press enter.
+	
+	> number1 number2 ... (ENTER)
+	
+	EX) 1 2 3 ...
+	
+	
+
+- DROP:
+
+	The top of the stack is dropped and one of the stack elements is also decremented.
+
+	> drop(ENTER)
+
+	EX) 1 2 drop	--->	1
+
+
+
+
+- TDROP (2DROP in Forth originally):
+
+	The two top of the stack are dropped and two of the stack elements is also decremented.
+	
+	> tdrop(ENTER)
+
+	EX) 1 2 3 4 tdrop	--->	1 2
+
+
+
+- SWAP:
+
+	The top two parts of the stack are swapped with each other
+	
+	> swap(ENTER)
+
+	EX) 1 2 3 swap	--->	1 3 2
+
+
+
+- TSWAP (2SWAP in Forth originally):
+
+	The two two-part parts on top of the stack are swapped with each other
+	
+	> tswap(ENTER)
+	
+	EX) 1 2 3 4 tswap	--->	3 4 1 2
+
+
+
+- DUP:
+
+	Pushes the top part of the stack into the stack. (Duplicates the highest part of the stack)
+	
+	> dup(ENTER)
+	
+	EX) 1 2 3 dup	--->	1 2 3 3
+
+
+
+- TDUP (2DUP in Forth originally):
+
+	Pushes the two two-part parts on top of the stack. (Duplicates the two two-part parts on top of the stack)
+	
+	> tdup(ENTER)
+
+	EX) 1 2 3 4 tdup	--->	1 2 3 4 3 4
+
+
+
+- ROT:
+
+	The second element before the top of the stack is moved to the top of the stack and the two elements after it are shifted back by one.
+	
+	> rot(ENTER)
+	
+	EX) 1 2 3 rot	--->	2 3 1
+
+
+
+- CR:
+
+	New line
+	
+	> cr(ENTER)
+	
+	
+	
+- MOD:
+
+	It divides the element before the top of the stack on the top of the stack, and then drops both elements and enters the stack outside of that division.
+	
+	> number1 number2 mod(ENTER)
+	
+	EX) 16 5 mod	--->	3
+	
+	
+	
+- /MOD:
+
+	It divides the element before the top stack on the top stack and then drops both elements and first enters the outside of that division into the stack and then the remainder of that division.
+	
+	> number1 number2 /mod(ENTER)
+	
+	EX) 16 5 /mod	--->	3 1
+	
+	
+	
+- NEGATE:
+
+	Multiplies the top stack by -1
+	
+	> number1 negate(ENTER)
+	
+	EX) 5 negate	--->	-5
+
+
+
+- NIP:
+
+	Drops the remaining element to the top of the stack
+	
+	> number1 number2 nip(ENTER)
+	
+	EX) 1 2 nip	--->	2
+	
+	
+	
+- TUCK:
+
+	It swaps the one element left on the top stack with the top stack and then pushes the one element left on the new top stack (the old top stack) on the stack.
+	
+	> number1 number2 tuck(ENTER)
+	
+	EX) 1 2 tuck	--->	2 1 2
+	
+	
+	
+- TOVER (2OVER in Forth originally):
+
+	Pushes the third and fourth element before the top of the stack into the stack, respectively.
+	
+	> number1 number2 number3 number4 tover(ENTER)
+	
+	EX) 1 2 3 4 tover	--->	1 2 3 4 1 2
+	
+	
+	
+- MIN:
+
+	Compares the top stack and its previous element. It keeps whichever one has a smaller value on the stack.
+	
+	> number1 number2 min(ENTER)
+	
+	EX) 2 1 min	--->	1
+	
+	
+	
+- MAX:
+
+	Compares the top stack and its previous element. It keeps whichever one has more value on the stack.
+	
+	> number1 number2 max(ENTER)
+	
+	EX) 1 2 min	--->	2
+	
+	
+	
+
+- EMIT:
+
+	Print char of its ascii code.
+	
+	> number1 emit(ENTER)
+	
+	EX) 42 emit	--->	*
+	
+	NOTE1) You can directly enter the character itself and you can print them with this function by their ASCII code.
+	
+	
+	
+- INCLUDE:
+
+	A file that opens the previously written text and executes it.
+	
+	> include(ENTER)
+	> Enter the address your file:
+	> ADDRESS: writeThePathHere(ENTER)
+	
+	EX) 	> include
+		> Enter the address your file:
+		> ADDRESS: testcase.fs
+		
+	NOTE1) You can import any type of file as long as it is written according to the instructions of the KIForth documentation!
+	
+	
+	
+- POWER:
+
+	An element before the top stack to the power of the top stack.
+	
+	> number1 number2 power(ENTER)
+	
+	EX) 2 3 power	--->	8
+	
+	
+	
+- FOUR BASIC MATHEMATICAL OPERATIONS:
+
+	+ :
+		> number1 number2 +(ENTER)
+		
+		EX) 1 2 +	--->	3
+		
+	- :
+		> number1 number2 -(ENTER)
+		
+		EX) 5 2 -	--->	3
+		
+	* :
+		> number1 number2 *(ENTER)
+		
+		EX) 4 2 *	--->	8
+		
+	/ :
+		> number1 number2 /(ENTER)
+		
+		EX) 16 2 /	--->	8
+		
+
